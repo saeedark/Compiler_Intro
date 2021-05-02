@@ -71,6 +71,9 @@
     #include<stdio.h>
     #include<string.h>
     #include<stdlib.h>   
+  
+  int yylex();
+  int yyerror(char *s);
 
   void addQuadruple(char [],char [],char [],char []);
   void display_Quadruple();
@@ -101,7 +104,7 @@
   }tmp_var;
 
 
-#line 105 "calc.tab.c"
+#line 108 "calc.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -155,11 +158,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 37 "calc.y"
+#line 40 "calc.y"
 
   double dval;
 
-#line 163 "calc.tab.c"
+#line 166 "calc.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -534,8 +537,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    51,    51,    52,    53,    56,    57,    58,    61,    62,
-      63
+       0,    54,    54,    55,    56,    59,    60,    61,    64,    65,
+      66
 };
 #endif
 
@@ -1328,43 +1331,43 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 51 "calc.y"
+#line 54 "calc.y"
                              { char * res = get_tmp(); addQuadruple("+", pop(), pop(), res); push(res);}
-#line 1334 "calc.tab.c"
+#line 1337 "calc.tab.c"
     break;
 
   case 3:
-#line 52 "calc.y"
+#line 55 "calc.y"
                              { char * res = get_tmp(); addQuadruple("-", pop(), pop(), res); push(res); }
-#line 1340 "calc.tab.c"
+#line 1343 "calc.tab.c"
     break;
 
   case 5:
-#line 56 "calc.y"
+#line 59 "calc.y"
                              { char * res = get_tmp(); addQuadruple("*", pop(), pop(), res); push(res); }
-#line 1346 "calc.tab.c"
+#line 1349 "calc.tab.c"
     break;
 
   case 6:
-#line 57 "calc.y"
+#line 60 "calc.y"
                              { char * res = get_tmp(); addQuadruple("/", pop(), pop(), res); push(res); }
-#line 1352 "calc.tab.c"
+#line 1355 "calc.tab.c"
     break;
 
   case 9:
-#line 62 "calc.y"
+#line 65 "calc.y"
                              { char * res = get_tmp(); addQuadruple("*", "-1", pop(), res); push(res); }
-#line 1358 "calc.tab.c"
+#line 1361 "calc.tab.c"
     break;
 
   case 10:
-#line 63 "calc.y"
+#line 66 "calc.y"
                              { char temp[10]; snprintf(temp,10,"%f",(yyvsp[0].dval)); push(temp); }
-#line 1364 "calc.tab.c"
+#line 1367 "calc.tab.c"
     break;
 
 
-#line 1368 "calc.tab.c"
+#line 1371 "calc.tab.c"
 
       default: break;
     }
@@ -1596,7 +1599,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 66 "calc.y"
+#line 69 "calc.y"
 
 
 int main(){
@@ -1658,7 +1661,7 @@ void addQuadruple(char op[10],char op2[10],char op1[10],char res[10]){
   Index++;
 }
 
-int yyerror()
+int yyerror(char * s)
 {
    printf("\nERROR!!\n");
    return(1);

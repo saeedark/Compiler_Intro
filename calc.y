@@ -2,6 +2,9 @@
     #include<stdio.h>
     #include<string.h>
     #include<stdlib.h>   
+  
+  int yylex();
+  int yyerror(char *s);
 
   void addQuadruple(char [],char [],char [],char []);
   void display_Quadruple();
@@ -124,7 +127,7 @@ void addQuadruple(char op[10],char op2[10],char op1[10],char res[10]){
   Index++;
 }
 
-int yyerror()
+int yyerror(char * s)
 {
    printf("\nERROR!!\n");
    return(1);
