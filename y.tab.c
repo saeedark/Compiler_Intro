@@ -1610,8 +1610,6 @@ int main(){
   tmp_var.number = 0;
   Stk.top = -1;
   yyparse();
-  printf("here");
-  printf("\n");
   display_Quadruple();
   printf("\n");
   /* todo llvm IR output */
@@ -1632,10 +1630,10 @@ char * get_tmp()
 
 void display_Quadruple(){
   int i;
-  printf("\n\n The Quadruple Table \n\n");
-  printf("\n     Result     Operator      Operand1      Operand2  ");
+  printf("\n The Quadruple Table");
+  printf("\n     Result     Operator      Operand1        Operand2  ");
   for(i=0;i<Index;i++)
-    printf("\n %d     %s          %s          %s          %s",i,QUAD[i].result,QUAD[i].operator,QUAD[i].operand1,QUAD[i].operand2);
+    printf("\n %d     %s          %s          %s        %s",i,QUAD[i].result,QUAD[i].operator,QUAD[i].operand1,QUAD[i].operand2);
 }
 
 void push(char *str)
