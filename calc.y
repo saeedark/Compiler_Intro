@@ -6,7 +6,7 @@
   int yylex();
   int yyerror(char *s);
 
-  void addQuadruple(char [],char [],char [],char []);
+  void addQuadruple(char [],char [],char [],char [], double);
   void display_Quadruple();
   void push(char*);
   char* pop();
@@ -20,6 +20,7 @@
     char operand1[10];
     char operand2[10];
     char result[10];
+    double resultvalue;
   }QUAD[75];
 
  struct Stack
@@ -33,7 +34,7 @@
     char text[2];
     int number;
   }tmp_var;
-
+  
 %}
 
 %union
@@ -44,6 +45,10 @@
 
 %token<dval> NUM
 
+%type<dval> E
+%type<dval> T
+%type<dval> F
+
 /* declaring precedence */
 %left '+' '-'
 %left '*' '/'
@@ -51,19 +56,19 @@
 
 %%
 
-E : E '+' T                  { char * res = get_tmp(); addQuadruple("+", pop(), pop(), res); push(res);}
-  | E '-' T                  { char * res = get_tmp(); addQuadruple("-", pop(), pop(), res); push(res); }
+E : E '+' T                  { char * res = get_tmp(); $$=$1+$3; addQuadruple("+", pop(), pop(), res, $$); push(res); }
+  | E '-' T                  { char * res = get_tmp(); $$=$1-$3; addQuadruple("-", pop(), pop(), res, $$); push(res); }
   | T
   ;
 
-T : T '*' F                  { char * res = get_tmp(); addQuadruple("*", pop(), pop(), res); push(res); }
-  | T '/' F                  { char * res = get_tmp(); addQuadruple("/", pop(), pop(), res); push(res); }
+T : T '*' F                  { char * res = get_tmp(); $$=$1*$3; addQuadruple("*", pop(), pop(), res, $$); push(res); }
+  | T '/' F                  { char * res = get_tmp(); $$=$1/$3; addQuadruple("/", pop(), pop(), res, $$); push(res); }
   | F
   ;
 
-F : '(' E ')'                 
-  | '-' F %prec UMINUS       { char * res = get_tmp(); addQuadruple("*", "-1", pop(), res); push(res); } 
-  | NUM                      { char temp[10]; snprintf(temp,10,"%f",$1); push(temp); }
+F : '(' E ')'                { $$=$2;} 
+  | '-' F %prec UMINUS       { char * res = get_tmp(); $$=$2*(-1); addQuadruple("*", "-1", pop(), res, $$); push(res);} 
+  | NUM                      { char temp[10]; snprintf(temp,10,"%f",$1); push(temp); $$=$1; }
   ;
   
 %%
@@ -94,9 +99,9 @@ char * get_tmp()
 void display_Quadruple(){
   int i;
   printf("\n The Quadruple Table");
-  printf("\n     Result     Operator      Operand1        Operand2  ");
+  printf("\n     Result         Value         Operator      Operand1        Operand2");
   for(i=0;i<Index;i++)
-    printf("\n %d     %s          %s          %s        %s",i,QUAD[i].result,QUAD[i].operator,QUAD[i].operand1,QUAD[i].operand2);
+    printf("\n %d     %s          %f          %s          %s         %s",i,QUAD[i].result,QUAD[i].resultvalue,QUAD[i].operator,QUAD[i].operand1,QUAD[i].operand2);
 }
 
 void push(char *str)
@@ -119,7 +124,8 @@ char * pop()
   return(str);
 }
  
-void addQuadruple(char op[10],char op2[10],char op1[10],char res[10]){
+void addQuadruple(char op[10],char op2[10],char op1[10],char res[10], double resval){
+  QUAD[Index].resultvalue = resval;
   strcpy(QUAD[Index].operator,op);
   strcpy(QUAD[Index].operand2,op2);
   strcpy(QUAD[Index].operand1,op1);
