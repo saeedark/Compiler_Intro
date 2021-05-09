@@ -74,15 +74,15 @@ F : '(' E ')'                { $$=$2;}
 %%
 
 int main(){
-  strcpy(tmp_var.text, "t");
-  tmp_var.number = 0;
-  Stk.top = -1;
-  yyparse();
-  display_Quadruple();
-  printf("\n");
-  /* todo llvm IR output */
-  /* llvm IR run*/
-  return(0);
+  while(1){
+    strcpy(tmp_var.text, "t");
+    tmp_var.number = 0;
+    Stk.top = -1;
+    Index = 0;
+    yyparse();
+    display_Quadruple();
+    printf("\n\n\n");
+  }
 }
 
 char * get_tmp()
