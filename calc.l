@@ -11,10 +11,11 @@
 [0-9]+\.[0-9]+                  { yylval.dval=atof(yytext); return NUM; }
 [- + ( ) * / ]                  { return *yytext; }
 [\n]                            { yyterminate(); }
-.				                        { printf("invalid char."); }
+.				                    { printf("invalid char."); }
 
 %%
 
+// wrapup, return 1 if done, 0 if not done
 int yywrap()
 {
    return(1);
